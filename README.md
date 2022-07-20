@@ -4,6 +4,7 @@
 - 3.Pool为线程池，需要传入一个参数，就是需要启用线程的个数，最好为当前cpu的盒数；
 - 4.使用Thread可以启用线程，使用Thread启用线程时必须传入Task对象；
 - 5.测试用例在tes目录下。
+- 6.Pool.queue传入函数的返回值为对象或者Promise对象，为对象时，对象中不能有Function类型；
 
 ### 使用示例
 ```javascript

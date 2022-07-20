@@ -23,10 +23,11 @@ class Pool implements IPool{
     }
 
     queue(fn: ITask['fn'], context: any){
-        const task = new Task(fn, context);
-        this.tasks.push(task);
-        this.schedule();
-        return task;
+        return new Promise((resolve, reject)=>{
+            const task = new Task(fn, context, resolve, reject);
+            this.tasks.push(task);
+            this.schedule();
+        });
     }
 
     private schedule(){

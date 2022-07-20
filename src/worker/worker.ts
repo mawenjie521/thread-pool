@@ -7,7 +7,15 @@ parentPort.on(THREAD_MESSAGE, (msg: any)=>{
   id= msg.id;
   try{
     const res = eval(`(${msg.fn})(${msg.context})`);
-    parentPort.postMessage({data: {code: codeStatus.success, content: res}, id: msg.id});
+    if(res instanceof Promise){
+      res.then(res=>{
+        parentPort.postMessage({data: {code: codeStatus.success, content: res}, id: id});
+      }, (e)=>{
+        parentPort.postMessage({data: new Error(codeStatus.error, e), id: id})
+      })
+    }else{
+      parentPort.postMessage({data: {code: codeStatus.success, content: res}, id: id});
+    }
   }catch(e){
     parentPort.postMessage({data: new Error(codeStatus.error, e), id: id})
   }  

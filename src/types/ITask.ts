@@ -1,7 +1,7 @@
 export interface ITask{
     id: string;
     context: any;
+    resolve: (res: any)=>void;
+    reject: (e: any)=>void;
     fn: (context: any)=>void;
-    cb: (res: any)=>void;
-    then: (res: any)=>void;
 }

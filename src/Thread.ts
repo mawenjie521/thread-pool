@@ -29,12 +29,16 @@ class Thread implements IThread{
                 if(task.id!==msg.id){
                     return;
                 }
-                task.cb(msg);
+                if(msg.data.code === codeStatus.success){
+                    task.resolve(msg.data.content);
+                }else{
+                    task.reject(msg.data.error);
+                }
                 this.status = status.DONE;
                 this.cb();
             })
         }catch(e){
-            task.cb({data: new Error(codeStatus.error, e)});
+            task.reject({data: new Error(codeStatus.error, e)});
         }
     }
     then(cb: ()=>void){
